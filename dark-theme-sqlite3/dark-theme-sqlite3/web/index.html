@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Dark/Light Theme Switcher</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="eel.js"></script>
+	<script>
+		// Function to toggle between dark and light themes
+		function toggleTheme() {
+			let theme = document.getElementById("theme");
+			if (theme.href.endsWith("style-dark.css")) {
+				theme.href = "style-light.css";
+			} else {
+				theme.href = "style-dark.css";
+			}
+			// Call Python function to update database with current theme
+			eel.update_theme(theme.href)();
+		}
+	</script>
+</head>
+<body>
+	<h1>Dark/Light Theme Switcher</h1>
+	<button onclick="toggleTheme()">Toggle Theme</button>
+
+	<!-- Link to current theme stylesheet -->
+	<link id="theme" rel="stylesheet" href="style-light.css">
+	
+	<!-- Load Python functions -->
+	<script>
+		eel.expose(setTheme);
+		function setTheme(theme) {
+			document.getElementById("theme").href = theme;
+		}
+	</script>
+</body>
+</html>
